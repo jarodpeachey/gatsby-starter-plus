@@ -1,6 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import { useStaticQuery, graphql } from "gatsby";
+import { useStaticQuery, graphql, withPrefix } from "gatsby";
 import "../styles/_layout.scss";
 
 function SEO({ description, title, bodyClass, image = "/" }) {
@@ -35,6 +35,8 @@ function SEO({ description, title, bodyClass, image = "/" }) {
       <meta name="twitter:creator" content={site.siteMetadata.author} />
       <meta name="twitter:title" content={title || defaultTitle} />
       <meta name="twitter:description" content={description || defaultDescription} />
+
+      <script src={withPrefix("js/main.js")} type="text/javascript" defer="true" />
     </Helmet>
   );
 }

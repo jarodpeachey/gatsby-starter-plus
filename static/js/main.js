@@ -10,4 +10,6 @@
 
     console.log("Appended script: ", script);
   }
+
+  addScript("/js/navigation.js");
 })();

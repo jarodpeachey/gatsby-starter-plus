@@ -1,79 +1,34 @@
 @use "colors" as *;
 @use "breakpoints" as *;
 @use "shadows" as *;
-
-.logo {
-  display: flex;
-  align-items: center;
-}
+@use "utilities" as *;
 
 nav {
-  // position: absolute;
-  position: fixed;
+  top: 0;
   width: 100%;
-  background-color: transparent;
-  display: flex;
-  align-items: center;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   z-index: 1000;
+  position: fixed;
   height: 78px;
+  background: white;
+  transition: .5s;
 
-  @include media-breakpoint-up(md) {
-    height: 100px;
+  &.scroll {
+    box-shadow: $shadow--one;
   }
 
-  img {
-    // width: 50px;
-    // height: 50px;
-
-    @include media-breakpoint-up(sm) {
-      width: 220px;
-      // height: 32px;
-      margin: 0 auto;
-    }
-  }
-
-  .menu {
-    display: flex;
-    align-items: center;
-  }
-
-  #toggle {
-    width: 42px;
-    height: 42px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: 0.1s;
-    cursor: pointer;
-    border: none;
-    background: transparent;
-    outline: none;
-
-    &:hover {
-      background: var(--color--background-secondary);
-      transition: background 0.3s;
-    }
-
-    svg {
-      width: 20px;
-      height: 20px;
-      fill: var(--outlined-button);
-      color: var(--outlined-button);
-    }
-  }
-
-  .btn {
-    margin-left: 14px;
-  }
-
-  .menu__wrapper {
+  .container {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    @include media-breakpoint-up(sm) {
-      justify-content: center;
+    .logo {
+      img {
+        width: 50px;
+        height: 50px;
+      }
     }
   }
 }
@@ -103,8 +58,7 @@ nav {
     position: absolute;
     height: 2px;
     width: 100%;
-    background: $color--gray-three;
-    border-radius: 20px;
+    background: $color--heading;
     opacity: 1;
     left: 0;
     transform: rotate(0deg);
@@ -134,13 +88,9 @@ nav {
   &.open {
     transition: all 0.15s ease-in-out;
     transform: rotate(-45deg);
-    background: $color--heading;
 
     span {
       transition: all 0.15s ease-in;
-      color: white;
-      background: var(--color--foreground);
-      transition: background 0.3s;
     }
     span:nth-child(1) {
       top: calc(50% - 1px);
@@ -164,21 +114,19 @@ nav {
   /* purgecss end ignore */
 }
 
-.navigation-menu {
+.menu {
   transition: 0.2s;
   position: absolute;
   top: calc(100%);
   margin: 0 auto;
   z-index: 999;
-  background: $color--heading;
-  width: 100%;
-  min-height: 100vh;
+  border-radius: $radius--two;
+  background: white;
+  width: 90%;
+  left: 5%;
   height: fit-content;
-  left: 0;
-  border-radius: 0.8rem;
   padding: 1rem;
   margin-top: 1.6rem;
-  color: white;
   @include media-breakpoint-up(sm) {
     padding: 1.5rem;
   }
@@ -193,19 +141,17 @@ nav {
   display: flex;
   flex-direction: column-reverse;
   align-items: flex-start;
-
-  /* purgecss start ignore */
   &.open {
     transition: transform 0.1s ease-out, opacity 0.1s ease-out, visibility 0s 0s;
     transform: scale(1);
     visibility: visible;
     opacity: 1;
+    box-shadow: $shadow--four;
 
     .menu__main a.menu__item {
       visibility: visible;
     }
   }
-  /* purgecss end ignore */
 
   .menu__main {
     margin: 0;
@@ -220,12 +166,16 @@ nav {
       // align-items: flex-start;
       text-decoration: none;
       transition: 0.1s;
-      color: #fff;
-      padding: 1rem 0;
-      font-family: Avenir Demi;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
       font-size: 1rem;
-      border-top: 1px solid #384757;
+      border-top: 1px solid $color--gray-two;
       border-radius: 0;
+      color: $color--text;
+
+      &:hover {
+        color: $color--heading;
+      }
 
       @include media-breakpoint-up(lg) {
         visibility: visible;
@@ -236,10 +186,11 @@ nav {
       margin-bottom: 2rem;
 
       .menu__item {
-        font-size: 1rem;
+        font-size: 1.1rem;
+        font-weight: 600;
         margin-bottom: 1rem;
         display: block;
-        color: #abb2c6;
+        color: $color--text;
       }
     }
 
@@ -247,64 +198,52 @@ nav {
       a.submenu__item {
         display: flex;
         align-items: flex-start;
-        border-radius: 0.5rem;
-        padding: 0;
+        border-radius: $radius--one;
+        padding: 0.8rem 0.8rem 0.8rem;
         text-decoration: none;
         transition: 0.1s;
+        border-bottom: 1px solid $color--gray-two;
+        border-radius: 0;
+        padding-bottom: 12px;
+        padding-top: 18px;
+
+        &:first-of-type {
+          border-top-right-radius: 6px;
+          border-top-left-radius: 6px;
+          padding-top: 12px;
+        }
+
+        &:last-of-type {
+          border-bottom-right-radius: 6px;
+          border-bottom-left-radius: 6px;
+          border-bottom: none;
+          // padding-bottom: 0;
+        }
+
+        &:hover {
+          background: $color--gray-one;
+        }
 
         img {
-          margin-top: 3px;
-          margin-right: 0.8125rem;
-          display: block;
-          height: 34px;
-          width: 34px;
+          position: relative;
+          top: -8px;
+          margin-right: 8px;
         }
 
         .submenu__item--title {
-          margin-top: 0rem;
-          color: white;
-          font-size: 1.125rem;
-          margin-bottom: 0.4rem;
+          font-size: 1.1rem;
+          color: $color--heading;
+          font-weight: bold;
+          margin-bottom: 6px;
+          margin-top: 0;
         }
 
         p {
-          color: #abb2c6;
-          font-size: 0.9375rem;
+          font-size: 1rem;
+          line-height: 24px;
           margin: 0;
         }
-
-        &.single {
-          color: #fff;
-          padding: 1rem 0;
-          font-family: "Avenir Demi";
-          font-size: 1rem;
-          border-top: 1px solid $color--heading;
-          border-radius: 0;
-        }
       }
-    }
-  }
-
-  .menu__cta {
-    align-items: center;
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: flex-start;
-    margin-bottom: 1rem;
-    p {
-      font-size: 1rem;
-      font-family: "Nunito Sans", Helvetica, Arial;
-      line-height: 1.5rem;
-      font-size: 1rem;
-      display: inline-block;
-      color: #abb2c6;
-      margin: 0;
-    }
-
-    .btn {
-      margin-right: 0.6rem;
-      background: $color--primary
-      // padding: 0.5rem 1rem;
     }
   }
 
@@ -330,26 +269,24 @@ nav {
       margin-bottom: auto;
       display: flex;
       align-items: center;
-      margin-left: 2rem;
 
       a.menu__item,
       span.menu__item,
       .has-submenu .menu__item {
         list-style-type: none;
-        font-family: Avenir Regular;
         text-decoration: none;
-        color: #444;
-        font-weight: 500;
-        padding: 0.8rem;
+        color: $color--heading;
+        font-weight: 400;
+        padding: 1rem;
         transition: 0.1s;
-        font-size: 1rem;
+        font-size: 1.1rem;
         border: none;
         margin: 0;
         margin-bottom: 0;
         cursor: pointer;
 
         &:hover {
-          color: $color--primary
+          color: $color--primary;
         }
       }
 
@@ -358,7 +295,7 @@ nav {
         position: relative;
 
         &:hover span {
-          color: $color--primary
+          color: $color--primary;
         }
 
         &::after {
@@ -368,7 +305,7 @@ nav {
           width: 12px;
           height: 12px;
           transform: rotate(45deg);
-          background: #1f2730;
+          background: #fff;
           left: calc(50% + 2px);
           visibility: hidden;
           opacity: 0;
@@ -378,17 +315,14 @@ nav {
         }
 
         .menu__submenu {
-          color: #444;
-          font-size: 1.1rem;
-          font-family: "Nunito Sans", Helvetica, Arial;
           position: absolute;
-          width: 800px;
+          width: 500px;
           max-width: 90vw;
           top: 100%;
           // padding-top: 14px;
           margin: 0 auto;
           z-index: 999;
-          left: -6rem;
+          left: -2rem;
           display: block;
           visibility: hidden;
           opacity: 0;
@@ -396,58 +330,10 @@ nav {
           transform: scale(0.95);
 
           .menu__submenu--wrapper {
-            .row {
-              margin-left: -6px;
-              margin-right: -6px;
-              margin-top: 0;
-              margin-bottom: 0;
-            }
-
-            .row > .col,
-            .row > [class*="col-"] {
-              padding: 6px;
-            }
-
-            background: #1f2730;
-            border-radius: 0.5rem;
-            padding: 0.4rem 0.8rem;
-            box-shadow: $shadow--deep;
-          }
-
-          a.submenu__item {
-            display: flex;
-            align-items: flex-start;
-            border-radius: 0.5rem;
-            padding: 0.8rem 0.8rem 0.8rem;
-            text-decoration: none;
-            transition: 0.1s;
-
-            &:hover {
-              background: #29333e;
-            }
-
-            img {
-            }
-
-            .submenu__item--title {
-              margin-top: 0;
-              color: #fff;
-              font-size: 1rem;
-              margin-bottom: 0.4rem;
-            }
-
-            p {
-              color: #abb2c6;
-              font-size: 1rem;
-              margin: 0;
-              font-family: Nunito Sans;
-              font-size: 0.9375rem;
-
-              font-weight: 400;
-              line-height: 22px;
-
-              text-align: left;
-            }
+            background: #fff;
+            border-radius: $radius--two;
+            padding: 16px;
+            box-shadow: $shadow--three;
           }
         }
 
@@ -476,24 +362,8 @@ nav {
 
       p {
         box-sizing: inherit;
-        font-family: Avenir Regular;
         font-size: 1rem;
-        color: #444;
-      }
-
-      .btn {
-        color: #fff;
-        border-radius: 0.3rem;
-        display: inline-block;
-        margin-left: 1.3rem;
-        margin-right: 0;
-        background: $color--gray-four;
-        border: 0.12rem solid $color--gray-four;
-
-        &:hover {
-          background: $color--primary;
-          border: 0.12rem solid $color--primary;
-        }
+        color: $color--text;
       }
     }
   }
@@ -522,7 +392,7 @@ nav {
     }
   }
 
-  .navigation-menu .menu__main .menu__item {
+  .menu .menu__main .menu__item {
     color: #ffffffcc;
 
     &:hover {
@@ -530,18 +400,17 @@ nav {
     }
   }
 
-  .navigation-menu .menu__main .has-submenu {
+  .menu .menu__main .has-submenu {
     &:hover span {
       color: #fff;
     }
   }
 
-  .navigation-menu .menu__cta p {
+  .menu .menu__cta p {
     color: #ffffff;
   }
 
   .mobile-menu__toggle span {
-    background: var(--color--foreground);
-    transition: background 0.3s;
+    background: $color--gray-one;
   }
 }

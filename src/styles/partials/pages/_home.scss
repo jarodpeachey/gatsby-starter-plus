@@ -1,6 +1,7 @@
 @use "../breakpoints" as *;
 @use "../shadows" as *;
 @use "../colors" as *;
+@use "../utilities" as *;
 
 .home {
   .hero {
@@ -37,8 +38,8 @@
     .feature {
       text-align: left;
       padding: 18px 24px;
-      box-shadow: 1px 1px 80px 0px #312f2f30;
-      border-radius: 16px;
+      box-shadow: $shadow--two;
+      border-radius: $radius--two;
 
       img {
         width: 70px;
